@@ -1,0 +1,326 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RootNamespace>EpicGames_Clone</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\1200x1600-1200x1600-e92fa6b99bb20c9edee19c361b8853b9.png" />
+    <None Remove="Images\24BR_S24_EGS_Launcher_Blade_1200x1600_1200x1600-0f74a2c818a2b043fa684875eca49784.png" />
+    <None Remove="Images\boom-blaster-1yo4l.png" />
+    <None Remove="Images\Carousel_BoxArt_1200x1600_1200x1600-38bda67bb1290f58e8a18ddc38a3c0ec.png" />
+    <None Remove="Images\clash--artifacts-of-chaos-vl62b.png" />
+    <None Remove="Images\CodeRedemption_Celeste-340x440-873dacb76be8c59d659757b4b5284a611_1200x1600-9e39079f1ce19738e65d349a8bc98650.png" />
+    <None Remove="Images\download-flatout-2-offer-k24lm.png" />
+    <None Remove="Images\download-the-lord-of-the-rings-return-to-moria-offer-1bmjr.png" />
+    <None Remove="Images\download-vernal-edge-offer-1xjv6.png" />
+    <None Remove="Images\download-witchfire-offer-mcfjx.png" />
+    <None Remove="Images\duskers-11vil.png" />
+    <None Remove="Images\egs-callisto-protocol-carousel-thumb-1200x1600-a10ac9c52ec5.jpg" />
+    <None Remove="Images\egs-dead-by-daylight-tools-torment-breaker-1920x1080-4ada12b79e72.png" />
+    <None Remove="Images\egs-fall-guys-hex-a-thon-breaker-1920x1080-c2a48759b2d2.png" />
+    <None Remove="Images\egs-featured-titles-blade-16x9-1920x1080-aaf6937d52da.png" />
+    <None Remove="Images\egs-midnight-suns-carousel-thumbnail-v2-1200x1600-f2ad382e29a2.jpg" />
+    <None Remove="Images\egs-nacon-connect-2023-breaker-1920x1080-3c9caeee3a93.png" />
+    <None Remove="Images\egs-need-for-speed-unbount-palace-edition-carousel-thumb-1200x1600-49ebf4fb1204.jpg" />
+    <None Remove="Images\egs-outerworlds-spacers-choice-edition-breaker-1920x1080-eb8f482f0515.png" />
+    <None Remove="Images\egs-phantom-brigade-breaker-1920x1080-2c2c7b25b90b.png" />
+    <None Remove="Images\egs-the-mageseeker-a-league-of-legends-story-breaker-1920x1080-8d5a99560c60.png" />
+    <None Remove="Images\EGS_AgeofWonders4_TriumphStudios_S2_1200x1600-6753645ce36ddcfd00142d40143f3c46.png" />
+    <None Remove="Images\EGS_CalloftheSea_OutoftheBlue_S1_2560x1440-204699c6410deef9c18be0ee392f8335.png" />
+    <None Remove="Images\EGS_Cyberpunk2077_CDPROJEKTRED_S2_03_1200x1600-b1847981214ac013383111fc457eb9c5.png" />
+    <None Remove="Images\EGS_DeadbyDaylight_BehaviourInteractive_S2_1200x1600-a1c30209e3b9fb63144daa9b5670f503.png" />
+    <None Remove="Images\EGS_DyingLight2StayHuman_Techland_S4_1200x1600-b3d66b4576fd6488b674710e13493435.png" />
+    <None Remove="Images\EGS_EASPORTSFIFA23StandardEdition_EACanada_S2_1200x1600-c806355d9cc8b35ebe392f2a7db03075.png" />
+    <None Remove="Images\EGS_EuropaUniversalisIVDomination_ParadoxTinto_DLC_S2_1200x1600-5b14d0c5ab28b55ae4322558ce0b4556.png" />
+    <None Remove="Images\EGS_Figment2CreedValley_BedtimeDigitalGames_S2_1200x1600-aee3edb65954908fbacadc5dbbfbed4e.png" />
+    <None Remove="Images\EGS_GoatSimulator3_CoffeeStainNorthAB_S2_1200x1600-99737fa8a749438ca909c776a4cd9b89.png" />
+    <None Remove="Images\EGS_GodofWar_SantaMonicaStudio_S2_1200x1600-fbdf3cbc2980749091d52751ffabb7b7_1200x1600-fbdf3cbc2980749091d52751ffabb7b7.png" />
+    <None Remove="Images\EGS_HogwartsLegacy_AvalancheSoftware_S2_1200x1600-2bb94423bf1c7e2fca10577d9f2878b9.png" />
+    <None Remove="Images\EGS_HonkaiImpact3rd_miHoYoLimited_S2_1200x1600-1b38bfc22a3cbe6a187573afb4811860.png" />
+    <None Remove="Images\EGS_HotelRenovator_TwoHorizons_S2_1200x1600-ea154fe10aad47892264376b645c1f66.png" />
+    <None Remove="Images\EGS_IdleChampionsoftheForgottenRealms_CodenameEntertainment_S2_1200x1600-52d8736cc62172b3a3fb42a34dee38df.png" />
+    <None Remove="Images\EGS_Isonzo_BlackMillGamesM2H_S2_1200x1600-d21f27fb0e1f96cc4a9b5d12ba9e5c80.png" />
+    <None Remove="Images\EGS_MarvelsSpiderManRemastered_InsomniacGamesNixxesSoftware_S2_1200x1600-76424286902489f4d9639ac9b735c2b2.png" />
+    <None Remove="Images\EGS_NARAKABLADEPOINT_24Entertainment_S2_1200x1600-88f4e1f1ee1ffa8f7a85bf4e3a492e7e.png" />
+    <None Remove="Images\EGS_RocketLeague_PsyonixLLC_S2_1200x1600-689a36ce5c8643ff37c1483d68be7d6e.png" />
+    <None Remove="Images\EGS_RogueSpirit_KidsWithSticks_S2_1200x1600-68bb27061cb541b53afcd24bf257ebdb.png" />
+    <None Remove="Images\EGS_SackboyABigAdventure_SumoDigital_S2_1200x1600-cc68022e4d17a383c8571dc43586353c.png" />
+    <None Remove="Images\EGS_SurvivingtheAftermathRebirth_IceflakeStudios_DLC_S2_1200x1600-cd9b2a2a8b9c87242d308280867c014a.png" />
+    <None Remove="Images\EGS_TheLamplightersLeague_HarebrainedSchemes_S2_1200x1600-21a6ee78796683f816b3fbc38b19c8a3.png" />
+    <None Remove="Images\EGS_TheLastofUsPartI_NaughtyDogLLC_S2_1200x1600-41d1b88814bea2ee8cb7986ec24713e0.png" />
+    <None Remove="Images\EGS_TheLegendofHeroesTrailstoAzure_NihonFalcom_S2_1200x1600-9f7d6b01de4e9f8527d8def616af108d.png" />
+    <None Remove="Images\EGS_VALORANT_RiotGames_S2_1200x1600-03324a2dfe6b0b9557ce96f23681c859.png" />
+    <None Remove="Images\EGS_Warhammer40000GladiusRelicsofWar_ProxyStudios_S1-2560x1440-961653d760b7d41a65a0c268be581870.png" />
+    <None Remove="Images\en-egs-holidaycoupon2021-seo-og-1200x1200-v01-1200x1200-c799402517bc.jpg" />
+    <None Remove="Images\en-free-offers-carousel-desktop-v2-1920x1080-b93c08a48cee.jpg" />
+    <None Remove="Images\en-free-offers-thumbnail-image-1200x1600-57c2eff9424c.png" />
+    <None Remove="Images\epic-games-holiday-sale-2022-details-1920x1080-7c4d6d5c6afa.jpg" />
+    <None Remove="Images\EpicGames_Logo.png" />
+    <None Remove="Images\Epic_Banner_EN_1200x1600_1200x1600-02efb9afdc3387570b9ff584419ca396.png" />
+    <None Remove="Images\Frostpunk_cover_art.jpg" />
+    <None Remove="Images\genshintall_1200x1600-4a5697be3925e8cb1f59725a9830cafc.png" />
+    <None Remove="Images\GRT_StorePortrait_1200x1600_1200x1600-d93f07d7827c8cf1827e12b5d01529d5.png" />
+    <None Remove="Images\GTAV_EGS_Artwork_1200x1600_Portrait Store Banner-1200x1600-382243057711adf80322ed2aeea42191.png" />
+    <None Remove="Images\kholat-11ygu.png" />
+    <None Remove="Images\left_arrow.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\mirages-of-winter-1qe0n.png" />
+    <None Remove="Images\nickelodeon-allstar-brawl-7zb1b.png" />
+    <None Remove="Images\PP1_TallImage_1200x1600-fe8ca9d7be58d90903ddf0d40d7b061c.png" />
+    <None Remove="Images\PP3_TallImage_1200x1600-1205b9298ea48a4d4d57b8408ec3fad3.png" />
+    <None Remove="Images\r6s-epic-capsule-1920x1080-us-1920x1080-ecf4c249f99b.png" />
+    <None Remove="Images\RDR2PC1227_Epic Games_860x1148-860x1148-b4c2210ee0c3c3b843a8de399bfe7f5c.png" />
+    <None Remove="Images\right_arrow.png" />
+    <None Remove="Images\rough-justice-84-12r2b.png" />
+    <None Remove="Images\RS_G_Store_Portrait_1200x1600_1200x1600-efc3bacf499b73bdc40eb0c9a6b1cb70.png" />
+    <None Remove="Images\splatter--zombiecalypse-now-xjuc3.png" />
+    <None Remove="Images\StandardTall_1200x1600-7cb2cda8741f9b56a4c1cbb3e7dc9b3e.png" />
+    <None Remove="Images\swordship-15yqu.png" />
+    <None Remove="Images\terminal-velocity-boosted-edition-1hnuz.png" />
+    <None Remove="Images\viruz-14hfv.png" />
+    <None Remove="Images\voltaire-rnins.png" />
+    <None Remove="Images\wolcen--lords-of-mayhem-1hxez.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\1200x1600-1200x1600-e92fa6b99bb20c9edee19c361b8853b9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\24BR_S24_EGS_Launcher_Blade_1200x1600_1200x1600-0f74a2c818a2b043fa684875eca49784.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\boom-blaster-1yo4l.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Carousel_BoxArt_1200x1600_1200x1600-38bda67bb1290f58e8a18ddc38a3c0ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\clash--artifacts-of-chaos-vl62b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CodeRedemption_Celeste-340x440-873dacb76be8c59d659757b4b5284a611_1200x1600-9e39079f1ce19738e65d349a8bc98650.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\download-flatout-2-offer-k24lm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\download-the-lord-of-the-rings-return-to-moria-offer-1bmjr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\download-vernal-edge-offer-1xjv6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\download-witchfire-offer-mcfjx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\duskers-11vil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-callisto-protocol-carousel-thumb-1200x1600-a10ac9c52ec5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-dead-by-daylight-tools-torment-breaker-1920x1080-4ada12b79e72.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-fall-guys-hex-a-thon-breaker-1920x1080-c2a48759b2d2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-featured-titles-blade-16x9-1920x1080-aaf6937d52da.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-midnight-suns-carousel-thumbnail-v2-1200x1600-f2ad382e29a2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-nacon-connect-2023-breaker-1920x1080-3c9caeee3a93.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-need-for-speed-unbount-palace-edition-carousel-thumb-1200x1600-49ebf4fb1204.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-outerworlds-spacers-choice-edition-breaker-1920x1080-eb8f482f0515.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-phantom-brigade-breaker-1920x1080-2c2c7b25b90b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\egs-the-mageseeker-a-league-of-legends-story-breaker-1920x1080-8d5a99560c60.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_AgeofWonders4_TriumphStudios_S2_1200x1600-6753645ce36ddcfd00142d40143f3c46.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_CalloftheSea_OutoftheBlue_S1_2560x1440-204699c6410deef9c18be0ee392f8335.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_Cyberpunk2077_CDPROJEKTRED_S2_03_1200x1600-b1847981214ac013383111fc457eb9c5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_DeadbyDaylight_BehaviourInteractive_S2_1200x1600-a1c30209e3b9fb63144daa9b5670f503.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_DyingLight2StayHuman_Techland_S4_1200x1600-b3d66b4576fd6488b674710e13493435.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_EASPORTSFIFA23StandardEdition_EACanada_S2_1200x1600-c806355d9cc8b35ebe392f2a7db03075.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_EuropaUniversalisIVDomination_ParadoxTinto_DLC_S2_1200x1600-5b14d0c5ab28b55ae4322558ce0b4556.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_Figment2CreedValley_BedtimeDigitalGames_S2_1200x1600-aee3edb65954908fbacadc5dbbfbed4e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_GoatSimulator3_CoffeeStainNorthAB_S2_1200x1600-99737fa8a749438ca909c776a4cd9b89.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_GodofWar_SantaMonicaStudio_S2_1200x1600-fbdf3cbc2980749091d52751ffabb7b7_1200x1600-fbdf3cbc2980749091d52751ffabb7b7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_HogwartsLegacy_AvalancheSoftware_S2_1200x1600-2bb94423bf1c7e2fca10577d9f2878b9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_HonkaiImpact3rd_miHoYoLimited_S2_1200x1600-1b38bfc22a3cbe6a187573afb4811860.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_HotelRenovator_TwoHorizons_S2_1200x1600-ea154fe10aad47892264376b645c1f66.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_IdleChampionsoftheForgottenRealms_CodenameEntertainment_S2_1200x1600-52d8736cc62172b3a3fb42a34dee38df.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_Isonzo_BlackMillGamesM2H_S2_1200x1600-d21f27fb0e1f96cc4a9b5d12ba9e5c80.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_MarvelsSpiderManRemastered_InsomniacGamesNixxesSoftware_S2_1200x1600-76424286902489f4d9639ac9b735c2b2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_NARAKABLADEPOINT_24Entertainment_S2_1200x1600-88f4e1f1ee1ffa8f7a85bf4e3a492e7e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_RocketLeague_PsyonixLLC_S2_1200x1600-689a36ce5c8643ff37c1483d68be7d6e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_RogueSpirit_KidsWithSticks_S2_1200x1600-68bb27061cb541b53afcd24bf257ebdb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_SackboyABigAdventure_SumoDigital_S2_1200x1600-cc68022e4d17a383c8571dc43586353c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_SurvivingtheAftermathRebirth_IceflakeStudios_DLC_S2_1200x1600-cd9b2a2a8b9c87242d308280867c014a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_TheLamplightersLeague_HarebrainedSchemes_S2_1200x1600-21a6ee78796683f816b3fbc38b19c8a3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_TheLastofUsPartI_NaughtyDogLLC_S2_1200x1600-41d1b88814bea2ee8cb7986ec24713e0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_TheLegendofHeroesTrailstoAzure_NihonFalcom_S2_1200x1600-9f7d6b01de4e9f8527d8def616af108d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_VALORANT_RiotGames_S2_1200x1600-03324a2dfe6b0b9557ce96f23681c859.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EGS_Warhammer40000GladiusRelicsofWar_ProxyStudios_S1-2560x1440-961653d760b7d41a65a0c268be581870.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\en-egs-holidaycoupon2021-seo-og-1200x1200-v01-1200x1200-c799402517bc.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\en-free-offers-carousel-desktop-v2-1920x1080-b93c08a48cee.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\en-free-offers-thumbnail-image-1200x1600-57c2eff9424c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\epic-games-holiday-sale-2022-details-1920x1080-7c4d6d5c6afa.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EpicGames_Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Epic_Banner_EN_1200x1600_1200x1600-02efb9afdc3387570b9ff584419ca396.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Frostpunk_cover_art.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\genshintall_1200x1600-4a5697be3925e8cb1f59725a9830cafc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\GRT_StorePortrait_1200x1600_1200x1600-d93f07d7827c8cf1827e12b5d01529d5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\GTAV_EGS_Artwork_1200x1600_Portrait Store Banner-1200x1600-382243057711adf80322ed2aeea42191.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\kholat-11ygu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\left_arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\mirages-of-winter-1qe0n.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\nickelodeon-allstar-brawl-7zb1b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\PP1_TallImage_1200x1600-fe8ca9d7be58d90903ddf0d40d7b061c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\PP3_TallImage_1200x1600-1205b9298ea48a4d4d57b8408ec3fad3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\r6s-epic-capsule-1920x1080-us-1920x1080-ecf4c249f99b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RDR2PC1227_Epic Games_860x1148-860x1148-b4c2210ee0c3c3b843a8de399bfe7f5c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\right_arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\rough-justice-84-12r2b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RS_G_Store_Portrait_1200x1600_1200x1600-efc3bacf499b73bdc40eb0c9a6b1cb70.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\splatter--zombiecalypse-now-xjuc3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\StandardTall_1200x1600-7cb2cda8741f9b56a4c1cbb3e7dc9b3e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\swordship-15yqu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\terminal-velocity-boosted-edition-1hnuz.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\viruz-14hfv.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\voltaire-rnins.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\wolcen--lords-of-mayhem-1hxez.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <PackageReference Include="SharpVectors" Version="1.8.1" />
+  </ItemGroup>
+
+</Project>

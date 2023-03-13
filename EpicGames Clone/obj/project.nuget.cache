@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "vmZmLG/BjhuVW55yUxaAAewsTAyhWocbkIp+xseB7/UOb7N9TyI5rAX2Ci0DZU9LmUZu7wFrWL6OYaQwl2ITpQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Benyamin\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Benyamin\\.nuget\\packages\\fontawesome.wpf\\4.7.0.9\\fontawesome.wpf.4.7.0.9.nupkg.sha512",
+    "C:\\Users\\Benyamin\\.nuget\\packages\\sharpvectors\\1.8.1\\sharpvectors.1.8.1.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'FontAwesome.WPF 4.7.0.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "FontAwesome.WPF",
+      "targetGraphs": [
+        "net6.0-windows7.0"
+      ]
+    }
+  ]
+}

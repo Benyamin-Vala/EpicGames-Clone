@@ -1,0 +1,1580 @@
+﻿<Window x:Class="EpicGames_Clone.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EpicGames_Clone"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:svgc1="http://sharpvectors.codeplex.com/svgc/"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="906" Width="1660" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid x:Name="Grid">
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" 
+                                           Height="Auto" Fill="Transparent"/>
+                                <Border x:Name="Rectangle1" CornerRadius="10 0 0 10" HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Stretch" Width="Auto" Height="Auto" 
+                                        Background="{TemplateBinding Background}"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Tag" Value="Horizontal">
+                                    <Setter TargetName="Rectangle1" Property="Width" Value="Auto"/>
+                                    <Setter TargetName="Rectangle1" Property="Height" Value="7"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--SCROLLBARS-->
+            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+                <Setter Property="Foreground" Value="#A6A6A6"/>
+                <Setter Property="Background" Value="#4D4D4D"/>
+                <Setter Property="Width" Value="10"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Border Background="#4D4D4D"  CornerRadius="10 0 0 10" Width="15">
+                            <Grid x:Name="GridRoot" Width="12">
+                                
+                                <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="False">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" 
+                                               Style="{DynamicResource ScrollThumbs}"/>
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                                
+                            </Grid>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                    <Setter Value="{DynamicResource ButtonSelectBrush}" 
+                                            TargetName="Thumb" Property="Background"/>
+                                </Trigger>
+                                <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                    <Setter Value="{DynamicResource DarkBrush}" TargetName="Thumb" Property="Background"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Width" Value="Auto"/>
+                                    <Setter Property="Height" Value="12"/>
+                                    <Setter TargetName="Thumb" Property="Tag" Value="Horizontal"/>
+                                    <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand"/>
+                                    <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border Background="#121212" CornerRadius="5" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+       
+      
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" >
+                <Border Margin="2,10,10,10" Background="Transparent" CornerRadius="2" Width="50" HorizontalAlignment="Right" MouseEnter="MouseEnteredOnExitBtn" Name="ExitBtn" MouseLeave="MouseLeavedOnExitBtn" MouseLeftButtonDown="ExitBtn_MouseLeftButtonDown">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="&#10060;" Foreground="White" FontSize="12"/>
+                </Border>
+                <Border Margin="2,10,60,10" Background="Transparent" CornerRadius="2" Width="30" HorizontalAlignment="Right" MouseEnter="MouseEnteredOnFullScreenBtn" Name="FullScreenBtn" MouseLeave="MouseLeavedOnFullScreenBtn" MouseLeftButtonDown="FullScreenBtn_MouseLeftButtonDown">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="□" Foreground="White" FontSize="24" FontFamily="Bold" Width="19" Margin="4,0,0,0"/>
+                </Border>
+                <Border Margin="2,10,85,10" Background="Transparent" CornerRadius="2" Width="30" HorizontalAlignment="Right" MouseEnter="MouseEnteredOnMinimizedBtn" Name="MinimizeBtn" MouseLeave="MouseLeavedOnMinimizeBtn" MouseLeftButtonDown="MinimizeBtn_MouseLeftButtonDown">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="&#128469;" Foreground="White" FontSize="20" TextAlignment="Center" Height="42"/>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="370"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="2">
+                    <Border Width="45" Height="45" CornerRadius="75" Background="#202020" HorizontalAlignment="Right" Margin="0,0,50,0" Name="ProfileBtn" MouseEnter="ProfileBtn_MouseEnter" MouseLeave="ProfileBtn_MouseLeave" Cursor="Hand">
+                        <TextBlock Text="B" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="22"  FontWeight="DemiBold"/>
+                    </Border>
+                    <Border Width="45" Height="45" CornerRadius="75" Background="#202020" HorizontalAlignment="Right" Margin="0,0,120,0" Name="GroupBtn" MouseEnter="GroupBtn_MouseEnter" MouseLeave="GroupBtn_MouseLeave" Cursor="Hand">
+                        <fa:FontAwesome Icon="User" Foreground="White" VerticalAlignment="Center" FontWeight="Light" HorizontalAlignment="Left" FontSize="17" Margin="16,0,0,0"/>
+                    </Border>
+                    <Border Width="7" Height="7" CornerRadius="10" Background="#0074E4" HorizontalAlignment="Right" Margin="0,0,55,35"/>
+                    <Border Width="7" Height="7" CornerRadius="10" Background="#11CF59" HorizontalAlignment="Right" Margin="0,35,55,0"/>
+                    <Border Width="1" Height="30" Background="#2A2A2A" Margin="0,0,8,0"/>
+                    <TextBlock Width="50" Text="Cart" Foreground="#686868" VerticalAlignment="Center" TextAlignment="Center" FontSize="18" FontWeight="DemiBold" Margin="0,0,120,0" Name="CartTxt" MouseEnter="CartTxt_MouseEnter" MouseLeave="CartTxt_MouseLeave" Cursor="Hand"/>
+                    <TextBlock Width="70" Text="Wishlist" Foreground="#686868" VerticalAlignment="Center" TextAlignment="Center" FontSize="18" FontWeight="DemiBold" Margin="0,0,270,0" Name="WishlistTxt" MouseEnter="Wishlist_MouseEnter" MouseLeave="Wishlist_MouseLeave" Cursor="Hand"/>
+                </Grid>
+                <Grid Grid.Column="0">
+                    <Border Height="100" Width="100" CornerRadius="4" HorizontalAlignment="Center" Margin="15,0,0,0">
+                        <Border.Background>
+                            <ImageBrush ImageSource="Images\EpicGames_Logo.png"  Stretch="Fill" />
+                        </Border.Background>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <TextBlock Text="Discorver" Foreground="#F5F5F5" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="305,0,0,0"/>
+                    <TextBlock Text="Browse" Foreground="#686868" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" FontSize="18" FontWeight="DemiBold" Margin="400,0,0,0" Name="BrowseTxt" MouseEnter="Browse_MouseEnter" MouseLeave="Browse_MouseLeave" Cursor="Hand"/>
+                    <TextBlock Text="News" Foreground="#686868" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" FontSize="18" FontWeight="DemiBold" Margin="487,0,0,0" Name="NewsTxt" MouseEnter="News_MouseEnter" MouseLeave="News_MouseLeave" Cursor="Hand"/>
+                    <TextBlock Text="&#10094;" Foreground="#929292" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="15,0,0,0"/>
+                    <Border Width="230" Background="#202020" Height="40" CornerRadius="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="45,0,0,0">
+                        <Grid>
+                            <fa:FontAwesome Icon="Search" Foreground="#898989" VerticalAlignment="Center" FontWeight="Light" HorizontalAlignment="Left" Margin="15,0,0,0"/>
+                            <TextBox Background="Transparent" Margin="40,5,20,5" BorderThickness="0" Foreground="#9C9EA0" VerticalContentAlignment="Center" FontSize="14" FontWeight="DemiBold" Text="Search Store"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Border Background="#202020" Height="65" VerticalAlignment="Top" Margin="20,5,20,5" CornerRadius="6" Cursor="Hand" Name="StoreBtn" MouseEnter="StoreBtn_MouseEnter" MouseLeave="StoreBtn_MouseLeave">
+                        <Grid>
+                            <fa:FontAwesome Icon="Ticket" Foreground="#F5F5F5" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+                            <TextBlock Text="Store" Foreground="#F5F5F5" FontSize="16" VerticalAlignment="Center" Margin="60,0,0,0" FontWeight="DemiBold"/>
+                        </Grid>
+                    </Border>
+                    <Border Background="Transparent" Height="65" VerticalAlignment="Top" Margin="20,74,20,5" CornerRadius="6" Name="LibraryBtn" MouseEnter="LibraryBtn_MouseEnter" MouseLeave="LibraryBtn_MouseLeave" Cursor="Hand">
+                        <Grid>
+                            <fa:FontAwesome Icon="list" Foreground="#9A9A9A" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+                            <TextBlock Text="Library" Foreground="#9A9A9A" FontSize="16" VerticalAlignment="Center" Margin="60,0,0,0" FontWeight="DemiBold"/>
+                        </Grid>
+                    </Border>
+                    <Border Background="Transparent" Height="65" VerticalAlignment="Top" Margin="20,143,20,5" CornerRadius="6" Name="UnrealEngineBtn" MouseEnter="UnrealEngineBtn_MouseEnter" MouseLeave="UnrealEngineBtn_MouseLeave" Cursor="Hand">
+                        <Grid>
+                            <fa:FontAwesome Icon="Gamepad" Foreground="#9A9A9A" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+                            <TextBlock Text="Unreal Engine" Foreground="#9A9A9A" FontSize="16" VerticalAlignment="Center" Margin="60,0,0,0" FontWeight="DemiBold"/>
+                        </Grid>
+                    </Border>
+                    <TextBlock Text="QUICK LAUNCH" Foreground="White" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,150"/>
+                    <Border Height="75" Width="55" CornerRadius="4" HorizontalAlignment="Left" Margin="25,0,0,0">
+                        <Border.Background>
+                            <ImageBrush ImageSource="Images\Frostpunk_cover_art.jpg"  Stretch="Fill" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock Text="Frostpunk" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,70,0" FontSize="17" FontWeight="SemiBold"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="800"/>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="500"/>
+                                <RowDefinition Height="400"/>
+                                <RowDefinition Height="700"/>
+                                <RowDefinition Height="700"/>
+                                <RowDefinition Height="800"/>
+                                <RowDefinition Height="500"/>
+                                <RowDefinition Height="900"/>
+                                <RowDefinition Height="400"/>
+                                <RowDefinition Height="400"/>
+                                <RowDefinition Height="400"/>
+                                <RowDefinition Height="400"/>
+                                <RowDefinition Height="400"/>
+                                <RowDefinition Height="700"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="260"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Border  Height="740" CornerRadius="12" HorizontalAlignment="Stretch" Margin="30,20,20,0" VerticalAlignment="Top">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\epic-games-holiday-sale-2022-details-1920x1080-7c4d6d5c6afa.jpg"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    
+                                    <Border Background="#202020" Width="240" Height="120" Margin="5,20,15,0" CornerRadius="7" VerticalAlignment="Top" HorizontalAlignment="Center" Cursor="Hand">
+                                        <Grid>
+                                            <Border  Height="100" Width="75" CornerRadius="12" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\epic-games-holiday-sale-2022-details-1920x1080-7c4d6d5c6afa.jpg"  Stretch="Fill" />
+                                                </Border.Background>
+                                                
+                                            </Border>
+                                            <TextBlock Text="Epic Games Store Holiday Sale" Foreground="White" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="80,0,0,0" />
+                                        </Grid>
+                                    </Border>
+                                    <Border Background="Transparent" Width="240" Height="120" Margin="5,145,15,0" CornerRadius="7" VerticalAlignment="Top" HorizontalAlignment="Center" Cursor="Hand" Name="Item2BtnPage1" MouseEnter="Item2BtnPage1_MouseEnter" MouseLeave="Item2BtnPage1_MouseLeave">
+                                        <Grid>
+                                            <Border  Height="100" Width="75" CornerRadius="12" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\en-egs-holidaycoupon2021-seo-og-1200x1200-v01-1200x1200-c799402517bc.jpg"  Stretch="Fill" />
+                                                </Border.Background>
+
+                                            </Border>
+                                            <TextBlock Text="Epic Games Store Holiday Coupon" Foreground="White" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="80,0,0,0" />
+                                        </Grid>
+                                    </Border>
+                                    <Border Background="Transparent" Width="240" Height="120" Margin="5,270,15,0" CornerRadius="7" VerticalAlignment="Top" HorizontalAlignment="Center" Name="Item3BtnPage1" MouseEnter="Item3BtnPage1_MouseEnter" MouseLeave="Item3BtnPage1_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border  Height="100" Width="75" CornerRadius="12" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\en-free-offers-thumbnail-image-1200x1600-57c2eff9424c.png"  Stretch="Fill" />
+                                                </Border.Background>
+
+                                            </Border>
+                                            <TextBlock Text="Epic Free Offers" Foreground="White" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="80,0,0,0" />
+                                        </Grid>
+                                    </Border>
+                                    <Border Background="Transparent" Width="240" Height="120" Margin="5,395,15,0" CornerRadius="7" VerticalAlignment="Top" HorizontalAlignment="Center" Name="Item4Page1" MouseEnter="Item4Page1_MouseEnter" MouseLeave="Item4Page1_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border  Height="100" Width="75" CornerRadius="12" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\egs-midnight-suns-carousel-thumbnail-v2-1200x1600-f2ad382e29a2.jpg"  Stretch="Fill" />
+                                                </Border.Background>
+
+                                            </Border>
+                                            <TextBlock Text="Marvel's Midnight Suns" Foreground="White" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="80,0,0,0" />
+                                        </Grid>
+                                    </Border>
+                                    <Border Background="Transparent" Width="240" Height="120" Margin="5,520,15,0" CornerRadius="7" VerticalAlignment="Top" HorizontalAlignment="Center" Name="Item5Page1" MouseEnter="Item5Page1_MouseEnter" MouseLeave="Item5Page1_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border  Height="100" Width="75" CornerRadius="12" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\egs-need-for-speed-unbount-palace-edition-carousel-thumb-1200x1600-49ebf4fb1204.jpg"  Stretch="Fill" />
+                                                </Border.Background>
+
+                                            </Border>
+                                            <TextBlock Text="Need for Speed™ Unbound Place..." Foreground="White" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="80,0,0,0" />
+                                        </Grid>
+                                    </Border>
+                                    <Border Background="Transparent" Width="240" Height="120" Margin="5,645,15,0" CornerRadius="7" VerticalAlignment="Top" HorizontalAlignment="Center" Name="Item6Page1" MouseEnter="Item6Page1_MouseEnter" MouseLeave="Item6Page1_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border  Height="100" Width="75" CornerRadius="12" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\egs-callisto-protocol-carousel-thumb-1200x1600-a10ac9c52ec5.jpg"  Stretch="Fill" />
+                                                </Border.Background>
+
+                                            </Border>
+                                            <TextBlock Text="The Callisto Protocol" Foreground="White" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="90,0,0,0" />
+                                        </Grid>
+                                    </Border>
+
+                                </Grid>
+                                
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <TextBlock Margin="30,0,0,0" Text="Holiday Sale Spotlight >" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+                                <Border Background="#202020" CornerRadius="35" Width="35" Cursor="Hand" Height="35" MouseLeave="rightArrowBtn_MouseLeave" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,10,0" Name="rightArrowBtn" MouseEnter="rightArrowBtn_MouseEnter">
+                                    <Border Margin="10">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\right_arrow.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                </Border>
+                                <Border Background="#202020" CornerRadius="35" Width="35" Height="35" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,60,0">
+                                    <Border Margin="10">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\left_arrow.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                </Border>
+                                
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Name="GodOfWarImage" MouseEnter="GodOfWarImage_MouseEnter" MouseLeave="GodOfWarImage_MouseLeave" Cursor="Hand">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_GodofWar_SantaMonicaStudio_S2_1200x1600-fbdf3cbc2980749091d52751ffabb7b7_1200x1600-fbdf3cbc2980749091d52751ffabb7b7.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="God of War" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-40%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£39.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1" Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border   CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Name="GoatSimImage" MouseLeave="GoatSimImage_MouseLeave" MouseEnter="GoatSimImage_MouseEnter" Cursor="Hand">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_GoatSimulator3_CoffeeStainNorthAB_S2_1200x1600-99737fa8a749438ca909c776a4cd9b89.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Goat Simulator 3" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-20%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£24.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£19.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" Name="EAFIFAImage" MouseEnter="EAFIFAImage_MouseEnter" MouseLeave="EAFIFAImage_MouseLeave" HorizontalAlignment="Stretch"  Cursor="Hand">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_EASPORTSFIFA23StandardEdition_EACanada_S2_1200x1600-c806355d9cc8b35ebe392f2a7db03075.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="EA SPORTS™ FIFA 23 Standard Edition" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-60%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£59.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Name="MarvelSpiderImage" MouseLeave="MarvelSpiderImage_MouseLeave" MouseEnter="MarvelSpiderImage_MouseEnter"  Cursor="Hand">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_MarvelsSpiderManRemastered_InsomniacGamesNixxesSoftware_S2_1200x1600-76424286902489f4d9639ac9b735c2b2.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="MAervel's Spider-Man Remastered" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-25%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£37.49" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Name="CyberpunkImage" MouseLeave="CyberpunkImage_MouseLeave" MouseEnter="CyberpunkImage_MouseEnter"  Cursor="Hand">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_Cyberpunk2077_CDPROJEKTRED_S2_03_1200x1600-b1847981214ac013383111fc457eb9c5.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Cyberpunk 2077" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-50%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£24.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Name="RedDeadRedemptionImage" MouseLeave="RedDeadRedemptionImage_MouseLeave" MouseEnter="RedDeadRedemptionImage_MouseEnter" Cursor="Hand">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\RDR2PC1227_Epic Games_860x1148-860x1148-b4c2210ee0c3c3b843a8de399bfe7f5c.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Red Dead Redemption 2" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-67%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£54.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£18.14" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="3" Margin="5,40,35,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Margin="0,0,20,0">
+                                    <Border VerticalAlignment="Stretch">
+                                        <Grid>
+                                            <Border CornerRadius="20" Margin="0,0,0,150" Cursor="Hand" Name="EgsDeadByDeadImage" MouseEnter="EgsDeadByDeadImage_MouseEnter" MouseLeave="EgsDeadByDeadImage_MouseLeave">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images/egs-dead-by-daylight-tools-torment-breaker-1920x1080-4ada12b79e72.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Coming Soon from Nacon Games" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,100,0,0"/>
+                                            <TextBlock Text="Check out and pre-purchase the latest games announced from Nacon Connect Winter 2023" Foreground="#717171" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,200,0,0" TextWrapping="Wrap" Width="300"/>
+                                            <TextBlock Text="Learn More" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,6" Cursor="Hand" MouseEnter="Learn_More_1_Border_MouseEnter" MouseLeave="Learn_More_1_Border_MouseLeave" Width="90" HorizontalAlignment="Left"/>
+                                            <Border Height="2" Width="90" Background="#292929" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,0" Name="Learn_More_1_Border"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1" Margin="0,0,20,0">
+                                    <Border VerticalAlignment="Stretch">
+                                        <Grid>
+                                            <Border CornerRadius="20" Margin="0,0,0,150" Cursor="Hand" Name="EgsNaconConnectImage" MouseEnter="EgsNaconConnectImage_MouseEnter" MouseLeave="EgsNaconConnectImage_MouseLeave">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images/egs-nacon-connect-2023-breaker-1920x1080-3c9caeee3a93.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Dead By Daylight: Tools Of Torment" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,100,0,0"/>
+                                            <TextBlock Text="Discover Tools Of Torment and meet this chapter's new characters. Save up to 50% off on Dead By Daylight add-ons." Foreground="#717171" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,200,0,0" TextWrapping="Wrap" Width="300"/>
+                                            <TextBlock Text="Save Now" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,6" Cursor="Hand" MouseEnter="SaveNow_Border_MouseEnter" MouseLeave="SaveNow_1Border_MouseLeave" Width="75" HorizontalAlignment="left"/>
+                                            <Border Height="2" Width="75" Background="#292929" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,0" Name="SaveNow_1Border"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Border VerticalAlignment="Stretch">
+                                        <Grid>
+                                            <Border CornerRadius="20" Margin="0,0,0,150" Cursor="Hand" Name="EgsTheMageseekerImage" MouseEnter="EgsTheMageseekerImage_MouseEnter" MouseLeave="EgsTheMageseekerImage_MouseLeave">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images/egs-the-mageseeker-a-league-of-legends-story-breaker-1920x1080-8d5a99560c60.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="The Mageseeker: A League of Legends Story" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,100,0,0"/>
+                                            <TextBlock Text="Pre-purchase now and receive The Lost Silverwing pre-purchase bonus! Coming April 18." Foreground="#717171" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,200,0,0" TextWrapping="Wrap" Width="300"/>
+                                            <TextBlock Text="£24.99" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,6" />
+                                            
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="4" Margin="20,40,20,40">
+                                <Border VerticalAlignment="Stretch" Background="#2A2A2A" CornerRadius="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="100"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <Grid Grid.Row="0">
+                                            <TextBlock Text="Free Games" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="20" Margin="50,0,0,0"/>
+                                            <Border BorderThickness="1" BorderBrush="#A3A3A3" CornerRadius="3" Background="Transparent" HorizontalAlignment="right" VerticalAlignment="center" Margin="0,0,50,0" Cursor="Hand" Name="ViewMoreBtn_1" MouseEnter="ViewMoreBtn_1_MouseEnter" MouseLeave="ViewMoreBtn_1_MouseLeave">
+                                                <TextBlock Text="VIEW MORE" FontSize="15" Foreground="#DCDCDC" FontWeight="SemiBold" Padding="15,7,15,7"/>
+                                            </Border>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Border Margin="40,0,10,175" CornerRadius="5" Cursor="Hand" Name="CallofSeaImage" MouseEnter="CallofSeaImage_MouseEnter" MouseLeave="CallofSeaImage_MouseLeave">
+                                                    <Border.Background>
+                                                        <ImageBrush ImageSource="Images/EGS_CalloftheSea_OutoftheBlue_S1_2560x1440-204699c6410deef9c18be0ee392f8335.png"/>
+                                                    </Border.Background>
+                                                </Border>
+                                                <Border Background="#0078F2" Height="30" Margin="40,175,10,0" CornerRadius="0,0,5,5" Cursor="Hand">
+                                                    <TextBlock Text="FREE NOW" Foreground="White" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </Border>
+                                                <TextBlock Text="Call of the Sea" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="40,0,0,110" Cursor="Hand"/>
+                                                <TextBlock Text="Free Now - Mar 16 at 06:00 PM" Foreground="#A1A1A1" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="40,0,0,80" Cursor="Hand"/>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <Border Margin="10,0,40,175" CornerRadius="5" Cursor="Hand" Name="WarhammerImage" MouseEnter="WarhammerImage_MouseEnter" MouseLeave="WarhammerImage_MouseLeave">
+                                                    <Border.Background>
+
+                                                        <ImageBrush ImageSource="Images/EGS_Warhammer40000GladiusRelicsofWar_ProxyStudios_S1-2560x1440-961653d760b7d41a65a0c268be581870.png"/>
+                                                    </Border.Background>
+                                                </Border>
+                                                <Border Background="#000000" Height="30" Margin="10,175,40,0" CornerRadius="0,0,5,5" Cursor="Hand">
+                                                    <TextBlock Text="COMING SOON" Foreground="White" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    
+                                                </Border>
+                                                <TextBlock Text="Warhanmmer 40,000: Gladius - Relics of War" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,110" Cursor="Hand"/>
+                                                <TextBlock Text="Free Mar 16 - Mar 23" Foreground="#A1A1A1" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,80" Cursor="Hand"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="5">
+                                <TextBlock Text="Coming Soon from Paradox Interactive" Foreground="white" FontSize="18" FontWeight="SemiBold" Margin="20,20,0,20"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Border Margin="20,65,0,200" CornerRadius="5" Cursor="Hand" Name="TheLemlightersLeagueImage" MouseEnter="TheLemlightersLeagueImage_MouseEnter" MouseLeave="TheLemlightersLeagueImage_MouseLeave">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="Images/EGS_TheLamplightersLeague_HarebrainedSchemes_S2_1200x1600-21a6ee78796683f816b3fbc38b19c8a3.png"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock Text="Base Game" Foreground="#939393" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,160" Cursor="Hand"/>
+                                        <TextBlock Text="The Lamplighters League" Foreground="white" FontSize="18" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,130" Cursor="Hand"/>
+                                        <TextBlock Text="Coming Soon" Foreground="#939393" FontSize="15" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,100" Cursor="Hand"/>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <Border Margin="20,65,0,200" CornerRadius="5" Cursor="Hand" Name="AgeofWonder_4_Image" MouseEnter="AgeofWonder_4_Image_MouseEnter" MouseLeave="AgeofWonder_4_Image_MouseLeave">
+                                            <Border.Background>
+
+                                                <ImageBrush ImageSource="Images/EGS_AgeofWonders4_TriumphStudios_S2_1200x1600-6753645ce36ddcfd00142d40143f3c46.png"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock Text="Base Game" Foreground="#939393" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,160" Cursor="Hand"/>
+                                        <TextBlock Text="Age of Wonders 4" Foreground="white" FontSize="18" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,130" Cursor="Hand"/>
+                                        <TextBlock Text="Available 05/02/23" Foreground="#939393" FontSize="15" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,100" Cursor="Hand"/>
+                                        <TextBlock Text="£41.99" Foreground="white" FontSize="15" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,70" Cursor="Hand"/>
+                                    </Grid>
+                                    <Grid Grid.Column="2">
+                                        <Border Margin="20,65,0,200" CornerRadius="5" Cursor="Hand" Name="SurvivingAfterMathImage" MouseEnter="SurvivingAfterMathImage_MouseEnter" MouseLeave="SurvivingAfterMathImage_MouseLeave">
+                                            <Border.Background>
+
+                                                <ImageBrush ImageSource="Images/EGS_SurvivingtheAftermathRebirth_IceflakeStudios_DLC_S2_1200x1600-cd9b2a2a8b9c87242d308280867c014a.png"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock Text="ADD-ON" Foreground="#939393" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,160" Cursor="Hand"/>
+                                        <TextBlock Text="Surviving the Aftermath: Rebirth" Foreground="white" FontSize="18" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,130" Cursor="Hand"/>
+                                        <TextBlock Text="Available 03/16/23" Foreground="#939393" FontSize="15" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,100" Cursor="Hand"/>
+                                    </Grid>
+                                    <Grid Grid.Column="3">
+                                        <Border Margin="20,65,20,200" CornerRadius="5" Cursor="Hand" Name="EuUniversalImage" MouseEnter="EuUniversalImage_MouseEnter" MouseLeave="EuUniversalImage_MouseLeave">
+                                            <Border.Background>
+
+                                                <ImageBrush ImageSource="Images/EGS_EuropaUniversalisIVDomination_ParadoxTinto_DLC_S2_1200x1600-5b14d0c5ab28b55ae4322558ce0b4556.png"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock Text="ADD-ON" Foreground="#939393" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,160" Cursor="Hand"/>
+                                        <TextBlock Text="Europa Universalis IV: Domination" Foreground="white" FontSize="18" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,130" Cursor="Hand"/>
+                                        <TextBlock Text="Coming Soon" Foreground="#939393" FontSize="15" VerticalAlignment="bottom" FontWeight="SemiBold" Margin="20,0,0,100" Cursor="Hand"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <TextBlock Text="Top Sellers" Foreground="White" FontSize="22" FontWeight="SemiBold" Margin="20,0,0,0"/>
+                                    <Border BorderThickness="1" BorderBrush="#A3A3A3" CornerRadius="3" Background="Transparent" HorizontalAlignment="right" VerticalAlignment="top" Margin="0,0,20,0" Cursor="Hand" Name="ViewMore_2" MouseEnter="ViewMore_2_MouseEnter" MouseLeave="ViewMore_2_MouseLeave">
+                                        <TextBlock Text="VIEW MORE" FontSize="15" Foreground="#DCDCDC" FontWeight="SemiBold" Padding="15,7,15,7"/>
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,50,20,0" VerticalAlignment="top" Name="Border_1_1" MouseEnter="Border_1_1_MouseEnter" MouseLeave="Border_1_1_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images/EGS_HogwartsLegacy_AvalancheSoftware_S2_1200x1600-2bb94423bf1c7e2fca10577d9f2878b9.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Hogwarts Legacy" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£49.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,200,20,0" VerticalAlignment="top" Name="Border_1_2" MouseEnter="Border_1_2_MouseEnter" MouseLeave="Border_1_2_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\EGS_DeadbyDaylight_BehaviourInteractive_S2_1200x1600-a1c30209e3b9fb63144daa9b5670f503.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Dead by Daylight" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <Border Background="#0074E4" Height="25" Width="60" CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="left" Margin="125,40,100,0">
+                                                <TextBlock Text="-50%" Foreground="white" FontSize="12" FontWeight="SemiBold" VerticalAlignment="center" HorizontalAlignment="center"/>
+                                            </Border>
+                                            <TextBlock Text="£14.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="190,40,100,0"/>
+                                            <Border Background="white" Height="1" Width="45"  VerticalAlignment="Center" HorizontalAlignment="left" Margin="190,40,100,0"/>
+                                            <TextBlock Text="£7.49" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="250,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,350,20,0" VerticalAlignment="top" Name="Border_1_3" MouseEnter="Border_1_3_MouseEnter" MouseLeave="Border_1_3_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\GTAV_EGS_Artwork_1200x1600_Portrait Store Banner-1200x1600-382243057711adf80322ed2aeea42191.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Grand Theft Auto V" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <Border Background="#0074E4" Height="25" Width="60" CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="left" Margin="125,40,100,0">
+                                                <TextBlock Text="-50%" Foreground="white" FontSize="12" FontWeight="SemiBold" VerticalAlignment="center" HorizontalAlignment="center"/>
+                                            </Border>
+                                            <TextBlock Text="£24.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="190,40,100,0"/>
+                                            <Border Background="white" Height="1" Width="45"  VerticalAlignment="Center" HorizontalAlignment="left" Margin="190,40,100,0"/>
+                                            <TextBlock Text="£12.49" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="250,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,500,20,0" VerticalAlignment="top" Name="Border_1_4" MouseEnter="Border_1_4_MouseEnter" MouseLeave="Border_1_4_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\EGS_EASPORTSFIFA23StandardEdition_EACanada_S2_1200x1600-c806355d9cc8b35ebe392f2a7db03075.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="EA SPORTS FIFA 23" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <Border Background="#0074E4" Height="25" Width="60" CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="left" Margin="125,40,100,0">
+                                                <TextBlock Text="-50%" Foreground="white" FontSize="12" FontWeight="SemiBold" VerticalAlignment="center" HorizontalAlignment="center"/>
+                                            </Border>
+                                            <TextBlock Text="£59.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="190,40,100,0"/>
+                                            <Border Background="white" Height="1" Width="45"  VerticalAlignment="Center" HorizontalAlignment="left" Margin="190,40,100,0"/>
+                                            <TextBlock Text="£29.99" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="250,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,650,20,0" VerticalAlignment="top" Name="Border_1_5" MouseEnter="Border_1_5_MouseEnter" MouseLeave="Border_1_5_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\RDR2PC1227_Epic Games_860x1148-860x1148-b4c2210ee0c3c3b843a8de399bfe7f5c.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Red Dead Redemption 2" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <Border Background="#0074E4" Height="25" Width="60" CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="left" Margin="125,40,100,0">
+                                                <TextBlock Text="-67%" Foreground="white" FontSize="12" FontWeight="SemiBold" VerticalAlignment="center" HorizontalAlignment="center"/>
+                                            </Border>
+                                            <TextBlock Text="£54.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="190,40,100,0"/>
+                                            <Border Background="white" Height="1" Width="45"  VerticalAlignment="Center" HorizontalAlignment="left" Margin="190,40,100,0"/>
+                                            <TextBlock Text="£18.14" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="250,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Border Width="1" Height="auto" Background="#2A2A2A" HorizontalAlignment="Left"/>
+                                    
+                                    <TextBlock Text="Most Played" Foreground="White" FontSize="22" FontWeight="SemiBold" Margin="20,0,0,0"/>
+                                    <Border BorderThickness="1" BorderBrush="#A3A3A3" CornerRadius="3" Background="Transparent" HorizontalAlignment="right" VerticalAlignment="top" Margin="0,0,20,0" Cursor="Hand" Name="ViewMore_3" MouseEnter="ViewMore_3_MouseEnter" MouseLeave="ViewMore_3_MouseLeave">
+                                        <TextBlock Text="VIEW MORE" FontSize="15" Foreground="#DCDCDC" FontWeight="SemiBold" Padding="15,7,15,7"/>
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,50,20,0" VerticalAlignment="top" Name="Border_1_6" MouseEnter="Border_1_6_MouseEnter" MouseLeave="Border_1_6_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\24BR_S24_EGS_Launcher_Blade_1200x1600_1200x1600-0f74a2c818a2b043fa684875eca49784.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Fortnite" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="125,0,20,20"/>
+                                            <TextBlock Text="Free" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="125,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,200,20,0" VerticalAlignment="top" Name="Border_1_7" MouseEnter="Border_1_7_MouseEnter" MouseLeave="Border_1_7_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\EGS_RocketLeague_PsyonixLLC_S2_1200x1600-689a36ce5c8643ff37c1483d68be7d6e.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Rocket League" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Free" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,350,20,0" VerticalAlignment="top" Name="Border_1_8" MouseEnter="Border_1_8_MouseEnter" MouseLeave="Border_1_8_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\GTAV_EGS_Artwork_1200x1600_Portrait Store Banner-1200x1600-382243057711adf80322ed2aeea42191.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Grand Theft Auto V" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <Border Background="#0074E4" Height="25" Width="60" CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="left" Margin="125,40,100,0">
+                                                <TextBlock Text="-50%" Foreground="white" FontSize="12" FontWeight="SemiBold" VerticalAlignment="center" HorizontalAlignment="center"/>
+                                            </Border>
+                                            <TextBlock Text="£24.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="190,40,100,0"/>
+                                            <Border Background="white" Height="1" Width="45"  VerticalAlignment="Center" HorizontalAlignment="left" Margin="190,40,100,0"/>
+                                            <TextBlock Text="£12.49" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="250,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,500,20,0" VerticalAlignment="top" Name="Border_1_9" MouseEnter="Border_1_9_MouseEnter" MouseLeave="Border_1_9_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\genshintall_1200x1600-4a5697be3925e8cb1f59725a9830cafc.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Genshin Impact" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Free" Foreground="white" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,650,20,0" VerticalAlignment="top" Name="Border_1_10" MouseEnter="Border_1_10_MouseEnter" MouseLeave="Border_1_10_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\EGS_VALORANT_RiotGames_S2_1200x1600-03324a2dfe6b0b9557ce96f23681c859.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="VALORANT" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Free" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Border Width="1" Height="auto" Background="#2A2A2A" HorizontalAlignment="Left"/>
+                                    
+                                    <TextBlock Text="Top Upcoming Wishlisted" Foreground="White" FontSize="22" FontWeight="SemiBold" Margin="20,0,0,0"/>
+                                    <Border BorderThickness="1" BorderBrush="#A3A3A3" CornerRadius="3" Background="Transparent" HorizontalAlignment="right" VerticalAlignment="top" Margin="0,0,20,0" Cursor="Hand" Name="ViewMore_4" MouseEnter="ViewMore_4_MouseEnter" MouseLeave="ViewMore_4_MouseLeave" >
+                                        <TextBlock Text="VIEW MORE" FontSize="15" Foreground="#DCDCDC" FontWeight="SemiBold" Padding="15,7,15,7" />
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,50,20,0" VerticalAlignment="top" Name="Border_1_11" MouseEnter="Border_1_11_MouseEnter" MouseLeave="Border_1_11_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\Carousel_BoxArt_1200x1600_1200x1600-38bda67bb1290f58e8a18ddc38a3c0ec.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Assassin's Creed Mirage" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Coming Soon" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,200,20,0" VerticalAlignment="top" Name="Border_1_12" MouseEnter="Border_1_12_MouseEnter" MouseLeave="Border_1_12_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\download-the-lord-of-the-rings-return-to-moria-offer-1bmjr.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="The Lord of The Rings..." Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Available 2023" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,350,20,0" VerticalAlignment="top" Name="Border_1_13" MouseEnter="Border_1_13_MouseEnter" MouseLeave="Border_1_13_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\EGS_TheLastofUsPartI_NaughtyDogLLC_S2_1200x1600-41d1b88814bea2ee8cb7986ec24713e0.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="The Last of US Part l" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£49.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,500,20,0" VerticalAlignment="top" Name="Border_1_14" MouseEnter="Border_1_14_MouseEnter" MouseLeave="Border_1_14_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\Epic_Banner_EN_1200x1600_1200x1600-02efb9afdc3387570b9ff584419ca396.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Honaki: Star Rail" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Coming Soon" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,650,20,0" VerticalAlignment="top" Name="Border_1_15" MouseEnter="Border_1_15_MouseEnter" MouseLeave="Border_1_15_MouseLeave" Cursor="Hand">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\download-witchfire-offer-mcfjx.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Witchfire" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Coming Soon" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="7" Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,135" HorizontalAlignment="Stretch"  Cursor="Hand" Name="Images_2_1" MouseEnter="Images_2_1_MouseEnter" MouseLeave="Images_2_1_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\GTAV_EGS_Artwork_1200x1600_Portrait Store Banner-1200x1600-382243057711adf80322ed2aeea42191.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,100"/>
+                                    <TextBlock Text="Grand Theft Auto V: Premium Edition" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-50%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£24.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1" Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                    <TextBlock Text="£12.49" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border   CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Images_2_2" MouseEnter="Images_2_2_MouseEnter" MouseLeave="Images_2_2_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_VALORANT_RiotGames_S2_1200x1600-03324a2dfe6b0b9557ce96f23681c859.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="VALORANT" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    
+                                    
+                                    <TextBlock Text="Free" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="10,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" Cursor="Hand" Name="Images_2_3" MouseEnter="Images_2_3_MouseEnter" MouseLeave="Images_2_3_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_NARAKABLADEPOINT_24Entertainment_S2_1200x1600-88f4e1f1ee1ffa8f7a85bf4e3a492e7e.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="NARAK: BLADEPOINT" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    
+                                    <TextBlock Text="£17.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="10,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Images_2_4" MouseEnter="Images_2_4_MouseEnter" MouseLeave="Images_2_4_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\RDR2PC1227_Epic Games_860x1148-860x1148-b4c2210ee0c3c3b843a8de399bfe7f5c.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Red Dead Redemption 2" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-67%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£54.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£18.14" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" Cursor="Hand" Name="Images_2_5" MouseEnter="Images_2_5_MouseEnter" MouseLeave="Images_2_5_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_EASPORTSFIFA23StandardEdition_EACanada_S2_1200x1600-c806355d9cc8b35ebe392f2a7db03075.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="EA SPORTS™ FIFA 23 Standard Edition" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-60%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£59.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+                                </Grid>
+                                <Grid Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Images_2_6" MouseEnter="Images_2_6_MouseEnter" MouseLeave="Images_2_6_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_HogwartsLegacy_AvalancheSoftware_S2_1200x1600-2bb94423bf1c7e2fca10577d9f2878b9.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Hogwarts Legacy" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    
+                                    <TextBlock Text="£49.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="10,0,0,15"/>
+
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="8" Margin="0,100,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <TextBlock Text="New Releases" Foreground="White" FontSize="22" FontWeight="SemiBold" Margin="20,0,0,0"/>
+                                    <Border BorderThickness="1" BorderBrush="#A3A3A3" CornerRadius="3" Background="Transparent" HorizontalAlignment="right" VerticalAlignment="top" Margin="0,0,20,0" Cursor="Hand" Name="ViewMore_5" MouseEnter="ViewMore_5_MouseEnter" MouseLeave="ViewMore_5_MouseLeave">
+                                        <TextBlock Text="VIEW MORE" FontSize="15" Foreground="#DCDCDC" FontWeight="SemiBold" Padding="15,7,15,7"/>
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,50,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_1" MouseEnter="Border_2_1_MouseEnter" MouseLeave="Border_2_1_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\splatter--zombiecalypse-now-xjuc3.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Border Background="#2A2A2A" Height="25" Width="120" CornerRadius="5" HorizontalAlignment="Left" Margin="120,0,0,15" VerticalAlignment="center">
+                                                <TextBlock Text="NOW ON EPIC" VerticalAlignment="center" Foreground="White" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="center"/>
+                                            </Border>
+                                            <TextBlock Text="Splatter - Zombiecalypse..." Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,75"/>
+                                            <TextBlock Text="£6.39" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,200,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_2" MouseEnter="Border_2_2_MouseEnter" MouseLeave="Border_2_2_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0" >
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\RS_G_Store_Portrait_1200x1600_1200x1600-efc3bacf499b73bdc40eb0c9a6b1cb70.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Border Background="#2A2A2A" Height="25" Width="120" CornerRadius="5" HorizontalAlignment="Left" Margin="120,0,0,15" VerticalAlignment="center">
+                                                <TextBlock Text="NOW ON EPIC" VerticalAlignment="center" Foreground="White" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="center"/>
+                                            </Border>
+                                            <TextBlock Text="Tom Clancy's Rainbow Six..." Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,75"/>
+                                            <TextBlock Text="£4.29" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,350,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_3" MouseEnter="Border_2_3_MouseEnter" MouseLeave="Border_2_3_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\GRT_StorePortrait_1200x1600_1200x1600-d93f07d7827c8cf1827e12b5d01529d5.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Tom Clancy's Ghost Recon" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£8.99" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,500,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_4" MouseEnter="Border_2_4_MouseEnter" MouseLeave="Border_2_4_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\EGS_Figment2CreedValley_BedtimeDigitalGames_S2_1200x1600-aee3edb65954908fbacadc5dbbfbed4e.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Figment 2: Creed Valley" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£49.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,650,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_5" MouseEnter="Border_2_5_MouseEnter" MouseLeave="Border_2_5_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\clash--artifacts-of-chaos-vl62b.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Clash - Artifacts of Chaos" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£24.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Border Width="1" Height="auto" Background="#2A2A2A" HorizontalAlignment="Left"/>
+
+                                    <TextBlock Text="Top Player Rated" Foreground="White" FontSize="22" FontWeight="SemiBold" Margin="20,0,0,0"/>
+                                    <Border BorderThickness="1" BorderBrush="#A3A3A3" CornerRadius="3" Background="Transparent" HorizontalAlignment="right" VerticalAlignment="top" Margin="0,0,20,0" Cursor="Hand" Name="VireMore_6" MouseEnter="VireMore_6_MouseEnter" MouseLeave="VireMore_6_MouseLeave">
+                                        <TextBlock Text="VIEW MORE" FontSize="15" Foreground="#DCDCDC" FontWeight="SemiBold" Padding="15,7,15,7"/>
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,50,20,0" VerticalAlignment="top"  Cursor="Hand" Name="Border_2_6" MouseEnter="Border_2_6_MouseEnter" MouseLeave="Border_2_6_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\PP1_TallImage_1200x1600-fe8ca9d7be58d90903ddf0d40d7b061c.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="The Jackbox Party Pack" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£49.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,200,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_7" MouseEnter="Border_2_7_MouseEnter" MouseLeave="Border_2_7_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\CodeRedemption_Celeste-340x440-873dacb76be8c59d659757b4b5284a611_1200x1600-9e39079f1ce19738e65d349a8bc98650.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Celeste" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£49.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,350,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_8" MouseEnter="Border_2_8_MouseEnter" MouseLeave="Border_2_8_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\PP3_TallImage_1200x1600-1205b9298ea48a4d4d57b8408ec3fad3.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Jackbox Party Pack 3" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£49.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,500,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_9" MouseEnter="Border_2_9_MouseEnter" MouseLeave="Border_2_9_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\1200x1600-1200x1600-e92fa6b99bb20c9edee19c361b8853b9.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Hades" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£18.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,650,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_10" MouseEnter="Border_2_10_MouseEnter" MouseLeave="Border_2_10_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\download-flatout-2-offer-k24lm.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Flatout 2" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="£49.99" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Border Width="1" Height="auto" Background="#2A2A2A" HorizontalAlignment="Left"/>
+
+                                    <TextBlock Text="Coming Soon" Foreground="White" FontSize="22" FontWeight="SemiBold" Margin="20,0,0,0"/>
+                                    <Border BorderThickness="1" BorderBrush="#A3A3A3" CornerRadius="3" Background="Transparent" HorizontalAlignment="right" VerticalAlignment="top" Margin="0,0,20,0" Cursor="Hand" Name="ViewMore_7" MouseEnter="ViewMore_7_MouseEnter" MouseLeave="ViewMore_7_MouseLeave">
+                                        <TextBlock Text="VIEW MORE" FontSize="15" Foreground="#DCDCDC" FontWeight="SemiBold" Padding="15,7,15,7"/>
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,50,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_11" MouseEnter="Border_2_11_MouseEnter" MouseLeave="Border_2_11_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0" >
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\rough-justice-84-12r2b.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Rough Justice: '84" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Available 03/13/23" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,200,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_12" MouseEnter="Border_2_12_MouseEnter" MouseLeave="Border_2_12_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\terminal-velocity-boosted-edition-1hnuz.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Terminal Velocity: Booste..." Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Available 03/14/23" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,350,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_13" MouseEnter="Border_2_13_MouseEnter" MouseLeave="Border_2_13_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\boom-blaster-1yo4l.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Boom Blaster" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Available 03/14/23" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,500,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_14" MouseEnter="Border_2_14_MouseEnter" MouseLeave="Border_2_14_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\EGS_TheLegendofHeroesTrailstoAzure_NihonFalcom_S2_1200x1600-9f7d6b01de4e9f8527d8def616af108d.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="The Legend of Heroes:..." Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Available 03/14/23" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Background="Transparent" CornerRadius="10" Height="150" Margin="20,650,20,0" VerticalAlignment="top" Cursor="Hand" Name="Border_2_15" MouseEnter="Border_2_15_MouseEnter" MouseLeave="Border_2_15_MouseLeave">
+                                        <Grid>
+                                            <Border Width="100" HorizontalAlignment="Left" CornerRadius="5" Height="125" Margin="10,0,10,0">
+                                                <Border.Background>
+
+                                                    <ImageBrush ImageSource="Images\download-vernal-edge-offer-1xjv6.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Vernal Edge" Foreground="#DEDEDE" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,0,20,20"/>
+                                            <TextBlock Text="Available 03/14/23" Foreground="#7B7B7B" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="left" Margin="120,40,100,0"/>
+                                        </Grid>
+
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="9" Margin="5,40,35,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Margin="0,0,20,0">
+                                    <Border VerticalAlignment="Stretch">
+                                        <Grid>
+                                            <Border CornerRadius="20" Margin="0,0,0,150" Cursor="Hand" Name="Table_1_1" MouseEnter="Table_1_1_MouseEnter" MouseLeave="Table_1_1_MouseLeave">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\egs-fall-guys-hex-a-thon-breaker-1920x1080-c2a48759b2d2.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Fall Guys" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,100,0,0"/>
+                                            <TextBlock Text="Welcome to the Hex-a-thon games. Impress the King of the Lost City with your hex skills to earn a fishtastic costume." Foreground="#717171" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,200,0,0" TextWrapping="Wrap" Width="300"/>
+                                            <TextBlock Text="Play For Free" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,6" Cursor="Hand"  Width="90" HorizontalAlignment="Left" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave"/>
+                                            <Border Height="2" Width="90" Background="#292929" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,0" Name="FallGuysEventLine"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1" Margin="0,0,20,0">
+                                    <Border VerticalAlignment="Stretch">
+                                        <Grid>
+                                            <Border CornerRadius="20" Margin="0,0,0,150" Cursor="Hand" Name="Table_1_2" MouseEnter="Table_1_2_MouseEnter" MouseLeave="Table_1_2_MouseLeave">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\egs-phantom-brigade-breaker-1920x1080-2c2c7b25b90b.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Phantom Brigade" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,100,0,0"/>
+                                            <TextBlock Text="Outnumbered and out-gunned, lead the Phantom Brigade through a desperate campaign to retake their war-torn homeland." Foreground="#717171" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,200,0,0" TextWrapping="Wrap" Width="300"/>
+                                            <TextBlock Text="£24.99" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,6" Cursor="Hand"  Width="75" HorizontalAlignment="left"/>
+                                            
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                
+                            </Grid>
+                            <Grid Grid.Row="10" Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"  Cursor="Hand" Name="Image_3_1" MouseEnter="Image_3_1_MouseEnter" MouseLeave="Image_3_1_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\clash--artifacts-of-chaos-vl62b.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Clash - Artifacts of Chaos" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-40%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£39.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1" Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border   CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Image_3_2" MouseEnter="Image_3_2_MouseEnter" MouseLeave="Image_3_2_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_HotelRenovator_TwoHorizons_S2_1200x1600-ea154fe10aad47892264376b645c1f66.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Hotel Renovator" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-20%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£24.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£19.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100"   Cursor="Hand" Name="Image_3_3" MouseEnter="Image_3_3_MouseEnter" MouseLeave="Image_3_3_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_RogueSpirit_KidsWithSticks_S2_1200x1600-68bb27061cb541b53afcd24bf257ebdb.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Rogue Spirit" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-60%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£59.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"   Cursor="Hand" Name="Image_3_4" MouseEnter="Image_3_4_MouseEnter" MouseLeave="Image_3_4_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\nickelodeon-allstar-brawl-7zb1b.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Nickelodeon All-Star Brawl" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-25%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£37.49" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"  Cursor="Hand" Name="Image_3_5" MouseEnter="Image_3_5_MouseEnter" MouseLeave="Image_3_5_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\voltaire-rnins.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Voltaire: The Vegan Vampire" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-50%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£24.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Image_3_6" MouseEnter="Image_3_6_MouseEnter" MouseLeave="Image_3_6_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\swordship-15yqu.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Swordship" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-67%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£54.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£18.14" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="11" Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"  Cursor="Hand" Name="Image_3_7" MouseEnter="Image_3_7_MouseEnter" MouseLeave="Image_3_7_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_Isonzo_BlackMillGamesM2H_S2_1200x1600-d21f27fb0e1f96cc4a9b5d12ba9e5c80.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Isonzo" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-40%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£39.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1" Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border   CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Image_3_8" MouseEnter="Image_3_8_MouseEnter" MouseLeave="Image_3_8_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_HonkaiImpact3rd_miHoYoLimited_S2_1200x1600-1b38bfc22a3cbe6a187573afb4811860.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Honkai Impact 3rd" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    
+                                    <TextBlock Text="Free" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="10,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100"   Cursor="Hand" Name="Image_3_9" MouseEnter="Image_3_9_MouseEnter" MouseLeave="Image_3_9_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\StandardTall_1200x1600-7cb2cda8741f9b56a4c1cbb3e7dc9b3e.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Disney Dreamlight Valley" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-60%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£59.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"   Cursor="Hand" Name="Image_3_10" MouseEnter="Image_3_10_MouseEnter" MouseLeave="Image_3_10_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_IdleChampionsoftheForgottenRealms_CodenameEntertainment_S2_1200x1600-52d8736cc62172b3a3fb42a34dee38df.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Idle Champions of the Forgotten Realms" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-25%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£37.49" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"  Cursor="Hand" Name="Image_3_11" MouseEnter="Image_3_11_MouseEnter" MouseLeave="Image_3_11_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_SackboyABigAdventure_SumoDigital_S2_1200x1600-cc68022e4d17a383c8571dc43586353c.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Sackboy: A Big Adventure" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-50%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£24.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Image_3_12" MouseEnter="Image_3_12_MouseEnter" MouseLeave="Image_3_12_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\EGS_DyingLight2StayHuman_Techland_S4_1200x1600-b3d66b4576fd6488b674710e13493435.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Dying Light 2 Stay Human" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-67%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£54.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£18.14" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="12" Margin="5,40,35,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Margin="0,0,20,0">
+                                    <Border VerticalAlignment="Stretch">
+                                        <Grid>
+                                            <Border CornerRadius="20" Margin="0,0,0,150" Cursor="Hand" Name="Table_2_1" MouseEnter="Table_2_1_MouseEnter" MouseLeave="Table_2_1_MouseLeave">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\r6s-epic-capsule-1920x1080-us-1920x1080-ecf4c249f99b.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="Rainbow Six Siege - Trial Week" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,100,0,0"/>
+                                            <TextBlock Text="Year 8 Season 1 is here! Grab your friends and play for FREE until March 16, then save up to 67% when you buy." Foreground="#717171" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,200,0,0" TextWrapping="Wrap" Width="300"/>
+                                            <TextBlock Text="Try For Free" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="20,0,0,6" Cursor="Hand"  Width="90" HorizontalAlignment="Left" MouseEnter="TextBlock_MouseEnter_1" MouseLeave="TextBlock_MouseLeave_1"/>
+                                            <Border Height="2" Width="90" Background="#292929" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,0" Name="RainbowSixEvent"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1" Margin="0,0,20,0">
+                                    <Border VerticalAlignment="Stretch">
+                                        <Grid>
+                                            <Border CornerRadius="20" Margin="0,0,0,150" Cursor="Hand" Name="Table_2_2" MouseEnter="Table_2_2_MouseEnter" MouseLeave="Table_2_2_MouseLeave">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="Images\egs-outerworlds-spacers-choice-edition-breaker-1920x1080-eb8f482f0515.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="The Outer Wolds: Spacer's Choice" Foreground="White" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,100,0,0"/>
+                                            <TextBlock Text="You've tried the rest, now come back for the best! Now with improved visuals, a higher level cap, and more!" Foreground="#717171" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,200,0,0" TextWrapping="Wrap" Width="300"/>
+                                            <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                                <TextBlock Text="-40%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </Border>
+                                            <TextBlock Text="£39.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                            <Border Background="#8F8F8F" Width="47" Height="1" Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                            <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                            </Grid>
+                            <Grid Grid.Row="13" Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"  Cursor="Hand" Name="Image_end_1" MouseEnter="Image_end_1_MouseEnter" MouseLeave="Image_end_1_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\kholat-11ygu.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Kholat" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-40%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£39.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1" Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border   CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Image_end_2" MouseEnter="Image_end_2_MouseEnter" MouseLeave="Image_end_2_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\duskers-11vil.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Duskers" Foreground="#E6E6E6" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-20%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£24.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£19.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100"   Cursor="Hand" Name="Image_end_3" MouseEnter="Image_end_3_MouseEnter" MouseLeave="Image_end_3_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\wolcen--lords-of-mayhem-1hxez.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Wolcen: Lords of Mayhem"  Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-60%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£59.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£23.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"   Cursor="Hand" Name="Image_end_4" MouseEnter="Image_end_4_MouseEnter" MouseLeave="Image_end_4_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\mirages-of-winter-1qe0n.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Mirage of Winter" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,40"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5">
+                                        <TextBlock Text="-25%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£37.49" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch"  Cursor="Hand" Name="Image_end_5" MouseEnter="Image_end_5_MouseEnter" MouseLeave="Image_end_5_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\swordship-15yqu.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="Swordship" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-50%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£49.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£24.99" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                                <Grid Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border  CornerRadius="4"  VerticalAlignment="Stretch" Margin="10,10,10,100" HorizontalAlignment="Stretch" Cursor="Hand" Name="Image_end_6" MouseEnter="Image_end_6_MouseEnter" MouseLeave="Image_end_6_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\viruz-14hfv.png"  Stretch="Fill" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="BASE GAME" Foreground="#818181" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="10,0,0,75"/>
+                                    <TextBlock Text="ViruZ" Width="200" TextWrapping="Wrap" Foreground="#E6E6E6" FontSize="14" FontWeight="SemiBold"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50"/>
+                                    <Border Height="30" Width="60" CornerRadius="5" Background="#0074E4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                                        <TextBlock Text="-67%" Foreground="White" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="£54.99" Foreground="#989898" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="80,0,0,15"/>
+                                    <Border Background="#8F8F8F" Width="47" Height="1"  Margin="80,325,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="£18.14" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom" Margin="140,0,0,15"/>
+
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Border  Margin="20,100,20,200" CornerRadius="15" Cursor="Hand" Name="EndTable" MouseEnter="EndTable_MouseEnter" MouseLeave="EndTable_MouseLeave">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="Images\egs-featured-titles-blade-16x9-1920x1080-aaf6937d52da.png"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid Margin="20,100,20,200">
+                                        <TextBlock Text="Explore Our Catalog" VerticalAlignment="center" Margin="0,0,0,150" Foreground="white" FontSize="22" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Browse by genre, features, price, and more to find your next favorite game." TextWrapping="Wrap" VerticalAlignment="center" Margin="0,0,0,50" Foreground="#8B8B8B" FontSize="17" FontWeight="SemiBold"/>
+                                        <Border Background="white" Height="50" Width="125" CornerRadius="5" VerticalAlignment="center" HorizontalAlignment="left" Margin="0,100,0,0" Cursor="Hand">
+                                            <TextBlock Text="BROWSE ALL" Foreground="#202020" FontSize="15" HorizontalAlignment="center" VerticalAlignment="center" FontWeight="DemiBold"/>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
