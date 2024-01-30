@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Benyamin\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj": {}
+    "C:\\Users\\\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Benyamin\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj": {
+    "C:\\Users\\\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Benyamin\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj",
+        "projectUniqueName": "C:\\Users\\\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj",
         "projectName": "EpicGames Clone",
-        "projectPath": "C:\\Users\\Benyamin\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj",
-        "packagesPath": "C:\\Users\\Benyamin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Benyamin\\source\\repos\\EpicGames Clone\\EpicGames Clone\\obj\\",
+        "projectPath": "C:\\Users\\\\source\\repos\\EpicGames Clone\\EpicGames Clone\\EpicGames Clone.csproj",
+        "packagesPath": "C:\\Users\\\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\\\source\\repos\\EpicGames Clone\\EpicGames Clone\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Benyamin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
